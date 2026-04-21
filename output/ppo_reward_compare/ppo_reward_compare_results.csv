@@ -1,0 +1,5 @@
+,Sharpe,Sortino,Calmar,weight_path
+sharpe,3.0341850969980952,5.739289858147816,0.10667705187118026,model_ckpt/ppo_multi_asset_sharpe_best.zip
+sortino,2.576644333905939,5.430073974233376,0.11053280868260994,model_ckpt/ppo_multi_asset_sortino_best.zip
+calmar,1.595574381246588,2.9398381733515175,0.3128806782514831,model_ckpt/ppo_multi_asset_calmar_best.zip
+sharpe_turnover_penalty,1.9435943532489193,3.273491702450297,0.21030988378164694,model_ckpt/ppo_multi_asset_sharpe_turnover_penalty_best.zip

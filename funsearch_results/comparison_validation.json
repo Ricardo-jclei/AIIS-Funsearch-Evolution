@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-04-20T20:35:54.164228",
+  "data_shape": [
+    728,
+    5
+  ],
+  "stock_list": [
+    "600519",
+    "600030",
+    "600036",
+    "601318",
+    "601988"
+  ],
+  "backtest_params": {
+    "initial_cash": 10000000.0,
+    "fee_rate": 0.001,
+    "slippage_rate": 0.0
+  },
+  "strategies": {
+    "等权": {
+      "sharpe_ratio": 0.7631412440772498,
+      "sortino_ratio": 1.3094160995898405,
+      "max_drawdown": -0.24379890934955886,
+      "final_nav": 14856543.912331535,
+      "weights_sum": 1.0
+    },
+    "最小方差": {
+      "sharpe_ratio": 1.2304219941957522,
+      "sortino_ratio": 1.9964449141072256,
+      "max_drawdown": -0.15978377390278498,
+      "final_nav": 17664503.121955976,
+      "weights_sum": 1.0
+    },
+    "最大夏普": {
+      "sharpe_ratio": 1.5301838245828836,
+      "sortino_ratio": 2.3914114259407167,
+      "max_drawdown": -0.18800783959893233,
+      "final_nav": 21890403.66617077,
+      "weights_sum": 1.0
+    },
+    "LSTM+PPO": {
+      "sharpe_ratio": 0.9963325319195248,
+      "sortino_ratio": 1.677551405547155,
+      "max_drawdown": -0.20634359674901845,
+      "final_nav": 16396178.966173314,
+      "weights_sum": 0.9999999403953552
+    }
+  }
+}

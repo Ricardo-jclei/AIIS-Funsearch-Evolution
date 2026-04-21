@@ -1,0 +1,163 @@
+{
+    "cleaning": {
+        "missing_value_strategy": "interpolate",
+        "outlier_method": "zscore",
+        "zscore_threshold": 3,
+        "date_format": "%Y-%m-%d",
+        "numeric_columns": {
+            "balance_sheet": ["资产总计", "负债合计", "归属于母公司股东的权益", "股本", "资本公积", "盈余公积", "未分配利润"],
+            "cash_flow": ["经营活动产生的现金流量净额", "投资活动产生的现金流量净额", "筹资活动产生的现金流量净额", "现金及现金等价物净增加额", "期末现金及现金等价物余额"],
+            "income_statement": ["营业收入", "营业利润", "净利润", "归属于母公司的净利润", "基本每股收益", "稀释每股收益", "净利息收入", "手续费及佣金净收入"],
+            "market": {
+                "daily": ["开盘", "收盘", "最高", "最低", "成交量", "成交额", "振幅", "涨跌幅", "涨跌额", "换手率"],
+                "minute": ["open", "close", "high", "low", "volume", "amount", "涨跌幅", "涨跌额", "振幅", "换手率"]
+            },
+            "fund_flow": ["主力净流入-净额", "主力净流入-净占比", "超大单净流入-净额", "超大单净流入-净占比", "大单净流入-净额", "大单净流入-净占比", "中单净流入-净额", "中单净流入-净占比", "小单净流入-净额", "小单净流入-净占比"],
+            "macro": ["今值", "预测值", "前值"]
+        }
+    },
+    "normalization": {
+        "scaling_method": "standard",
+        "feature_range": [0, 1],
+        "group_by": ["symbol", "report_type"]
+    },
+    "feature_engineering": {
+        "window_sizes": [5, 10, 20, 30, 60],
+        "technical_indicators": {
+            "ma": [5, 10, 20, 30, 60],
+            "rsi": [6, 12, 24],
+            "macd": {"fast": 12, "slow": 26, "signal": 9},
+            "bollinger_bands": {"window": 20, "std": 2}
+        },
+        "fundamental_features": {
+            "profitability": ["ROE", "ROA", "毛利率", "净利率", "净息差", "手续费收入占比"],
+            "growth": ["营收增长率", "净利润增长率", "总资产增长率", "净利息收入增长率", "手续费收入增长率"],
+            "leverage": ["资产负债率", "权益乘数", "存贷比"],
+            "efficiency": ["总资产周转率", "应收账款周转率", "成本收入比"],
+            "cash_flow": ["经营现金流/净利润", "自由现金流", "现金及现金等价物增长率"]
+        },
+        "sentiment_features": {
+            "fund_flow": {
+                "net_inflow": ["主力净流入-净额", "超大单净流入-净额", "大单净流入-净额", "中单净流入-净额", "小单净流入-净额"],
+                "inflow_ratio": ["主力净流入-净占比", "超大单净流入-净占比", "大单净流入-净占比", "中单净流入-净占比", "小单净流入-净占比"],
+                "trend": ["资金流向趋势", "主力控盘度", "资金集中度"]
+            }
+        },
+        "macro_features": {
+            "gdp": {
+                "raw": ["今值", "预测值", "前值"],
+                "derived": ["GDP同比", "GDP环比", "GDP趋势", "GDP预测偏差"],
+                "window_sizes": [4, 8, 12]
+            },
+            "pmi": {
+                "raw": ["今值", "预测值", "前值"],
+                "derived": ["PMI趋势", "PMI预测偏差", "PMI波动率"],
+                "window_sizes": [3, 6, 12]
+            },
+            "ppi": {
+                "raw": ["今值", "预测值", "前值"],
+                "derived": ["PPI趋势", "PPI预测偏差", "PPI波动率"],
+                "window_sizes": [3, 6, 12]
+            }
+        },
+        "time_features": {
+            "day_of_week": true,
+            "day_of_month": true,
+            "month": true,
+            "quarter": true,
+            "year": true,
+            "is_weekend": true,
+            "is_month_end": true,
+            "is_quarter_end": true,
+            "is_year_end": true
+        }
+    },
+    "data_types": {
+        "market": {
+            "daily": {
+                "required_columns": ["日期", "股票代码", "开盘", "收盘", "最高", "最低", "成交量", "成交额", "振幅", "涨跌幅", "涨跌额", "换手率"],
+                "date_column": "日期",
+                "symbol_column": "股票代码",
+                "price_columns": ["开盘", "收盘", "最高", "最低"],
+                "volume_column": "成交量",
+                "amount_column": "成交额",
+                "return_columns": ["涨跌幅", "涨跌额"],
+                "additional_columns": ["振幅", "换手率"]
+            },
+            "minute": {
+                "required_columns": ["datetime", "open", "close", "high", "low", "涨跌幅", "涨跌额", "volume", "amount", "振幅", "换手率"],
+                "date_column": "datetime",
+                "price_columns": ["open", "close", "high", "low"],
+                "volume_column": "volume",
+                "amount_column": "amount",
+                "return_columns": ["涨跌幅", "涨跌额"],
+                "additional_columns": ["振幅", "换手率"]
+            }
+        },
+        "fundamental": {
+            "balance_sheet": {
+                "required_columns": ["报告日", "资产总计", "负债合计", "归属于母公司股东权益合计", "股本", "资本公积", "盈余公积", "未分配利润"],
+                "date_column": "报告日",
+                "additional_columns": ["币种", "类型", "是否审计", "公告日期", "更新日期"]
+            },
+            "cash_flow": {
+                "required_columns": ["报告日", "经营活动产生的现金流量净额", "投资活动产生的现金流量净额", "筹资活动产生的现金流量净额", "现金及现金等价物净增加额", "期末现金及现金等价物余额"],
+                "date_column": "报告日",
+                "additional_columns": ["币种", "类型", "是否审计", "公告日期", "更新日期"]
+            },
+            "income_statement": {
+                "required_columns": ["报告日", "营业收入", "营业利润", "净利润", "归属于母公司的净利润", "基本每股收益", "稀释每股收益", "净利息收入", "手续费及佣金净收入"],
+                "date_column": "报告日",
+                "additional_columns": ["币种", "类型", "是否审计", "公告日期", "更新日期"]
+            }
+        },
+        "macro": {
+            "required_columns": ["商品", "日期", "今值", "预测值", "前值"],
+            "date_column": "日期",
+            "indicator_column": "商品",
+            "value_columns": ["今值", "预测值", "前值"],
+            "indicators": {
+                "pmi": {
+                    "name": "中国官方制造业PMI",
+                    "frequency": "monthly",
+                    "release_date": "end_of_month",
+                    "value_type": "index"
+                },
+                "ppi": {
+                    "name": "中国PPI年率报告",
+                    "frequency": "monthly",
+                    "release_date": "mid_month",
+                    "value_type": "percentage"
+                },
+                "gdp": {
+                    "name": "中国GDP年率报告",
+                    "frequency": "quarterly",
+                    "release_date": "end_of_quarter",
+                    "value_type": "percentage"
+                }
+            }
+        },
+        "sentiment": {
+            "fund_flow": {
+                "required_columns": ["日期", "收盘价", "涨跌幅", "主力净流入-净额", "主力净流入-净占比", "超大单净流入-净额", "超大单净流入-净占比", "大单净流入-净额", "大单净流入-净占比", "中单净流入-净额", "中单净流入-净占比", "小单净流入-净额", "小单净流入-净占比"],
+                "date_column": "日期",
+                "price_columns": ["收盘价"],
+                "return_columns": ["涨跌幅"]
+            }
+        }
+    },
+    "model_preparation": {
+        "target_variable": "未来N日收益率",
+        "prediction_horizon": [1, 5, 10, 20],
+        "train_test_split": {
+            "test_size": 0.2,
+            "validation_size": 0.1,
+            "time_based": true
+        },
+        "feature_selection": {
+            "correlation_threshold": 0.8,
+            "importance_threshold": 0.01,
+            "variance_threshold": 0.1
+        }
+    }
+} 

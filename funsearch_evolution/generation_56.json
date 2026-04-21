@@ -1,0 +1,60 @@
+{
+  "generation": 56,
+  "timestamp": "2026-04-20T21:55:37.426157",
+  "execution_time": 0.4062511920928955,
+  "generated_code": "    \"\"\"Enhanced version of investment strategy with innovative approaches.\"\"\"\n\n    if portfolio is None:\n        if market_state is not None and market_state.shape[1] >= 5:\n            portfolio = market_state[-1, :5] if len(market_state) > 0 else np.ones(5)\n        else:\n            portfolio = np.ones(5)\n\n    base_weights = np.ones(len(portfolio)) / len(portfolio)\n\n    if market_state is not None and len(market_state) > 0:\n        trend_weights = np.zeros(5)\n        inv_vol_weights = np.zeros(5)\n        mean_reversion_weights = np.zeros(5)\n        momentum_weights = np.zeros(5)\n\n        if market_state.shape[1] >= 5:\n            # Trend Analysis\n            recent_trend = market_state[-1, :5] - market_state[0, :5]\n            recent_trend = np.clip(recent_trend, -10, 10)\n            trend_weights = np.exp(np.clip(recent_trend, -10, 10)) / (np.sum(np.exp(np.clip(recent_trend, -10, 10))) + 1e-8)\n\n            # Volatility Adjustment\n            volatility = np.std(market_state[:, :5], axis=0) + 1e-8\n            inv_vol_weights = 1.0 / (volatility + 1e-8)\n            inv_vol_weights /= (np.sum(inv_vol_weights) + 1e-8)\n\n            # Mean-Reversion Strategy\n            mean_prices = np.mean(market_state[:, :5], axis=0) + 1e-8\n            current_prices = market_state[-1, :5] + 1e-8\n            mean_reversion_weights = mean_prices / current_prices\n            mean_reversion_weights = np.clip(mean_reversion_weights, 0, None)\n            mean_reversion_weights /= (np.sum(mean_reversion_weights) + 1e-8)\n\n            # Momentum Strategy\n            if len(market_state) > 1:\n                recent_returns = (market_state[-1, :5] - market_state[-2, :5]) / (market_state[-2, :5] + 1e-8)\n                momentum_weights = np.exp(np.clip(recent_returns, -1, 1)) / (np.sum(np.exp(np.clip(recent_returns, -1, 1))) + 1e-8)\n\n            # Combine Strategies using diverse weighting schemes\n            combined_weights = (0.3 * trend_weights + \n                                0.25 * inv_vol_weights + \n                                0.2 * mean_reversion_weights + \n                                0.25 * momentum_weights)\n\n            # Apply Noise for Evolutionary Approach\n            noise = np.random.normal(0, 0.05, len(portfolio))\n            final_weights = combined_weights + noise\n            \n            # Ensure valid and normalized weights\n            final_weights = np.clip(final_weights, 0, 1)\n            weights_sum = np.sum(final_weights)\n            if weights_sum == 0:\n                final_weights = base_weights\n            else:\n                final_weights /= weights_sum\n\n            return final_weights\n\n    return base_weights",
+  "island_results": [
+    {
+      "island_id": 0,
+      "score": 0.7722654612853823,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    \"\"\"Improved version of investment strategy with innovative approaches.\"\"\"\n\n    if portfolio is None:\n        if market_state is not None and market_state.shape[1] >= 5:\n            portfolio = ..."
+    },
+    {
+      "island_id": 1,
+      "score": 0.769056207725671,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        if market_state is not None and market_state.shape[1] >= 5:\n            portfolio = market_state[-1, :5] if len(market_state) > 0 else np.ones(5)\n        else:\n   ..."
+    },
+    {
+      "island_id": 2,
+      "score": 0.8432649141047095,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 3,
+      "score": 0.8549669935794395,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 4,
+      "score": 0.8521612883869806,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 5,
+      "score": 0.8857773520630552,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 6,
+      "score": 0.8594373442220903,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 7,
+      "score": 0.8714929102852131,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    if portfolio is None:\n        # multi_factor_array的形状是[时间步, 224]，我们需要提取股票相关的特征\n        # 假设前5个特征对应5个股票\n        if market_state is not None and market_state.shape[1] >= 5:\n            # 使用前5个特征作..."
+    },
+    {
+      "island_id": 8,
+      "score": 0.7549057569737437,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    \"\"\"Enhanced version of investment strategy with innovative approaches.\"\"\"\n\n    if portfolio is None:\n        if market_state is not None and market_state.shape[1] >= 5:\n            portfolio = ..."
+    },
+    {
+      "island_id": 9,
+      "score": 0.7559297632808765,
+      "strategy_code": "    \"\"\"\n    Enhanced initial strategy template with diversity to promote evolution.\n    \n    Args:\n        market_state: Current market state array (shape: [window_size, 224])\n        portfolio: Current portfolio weights (shape: [5])\n    \n    Returns:\n        New portfolio weights (shape: [5])\n    \"\"\"\n    \"\"\"Enhanced version of investment strategy with innovative approaches.\"\"\"\n\n    if portfolio is None:\n        if market_state is not None and market_state.shape[1] >= 5:\n            portfolio = ..."
+    }
+  ],
+  "best_score": 0.8857773520630552,
+  "average_score": 0.8219257991907162
+}
