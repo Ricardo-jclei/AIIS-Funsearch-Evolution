@@ -32,7 +32,7 @@ class LLM:
     self._samples_per_prompt = samples_per_prompt
 
     # ====================== 【填写你的API配置】 ======================
-    self.API_KEY = os.environ.get("OPENAI_API_KEY", "your_key_here")
+    self.API_KEY = "sk-hbob2QgBFpclKVU8yrjXHmwIIN36o8cu1k1ccUGUXF1jqam0"
     self.HOST_URL = "https://api.bltcy.ai"
     # ===============================================================
 
